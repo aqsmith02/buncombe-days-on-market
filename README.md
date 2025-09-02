@@ -69,3 +69,6 @@ Visit the live dashboard at: **[aqsmith02.github.io/buncombe-days-on-market](htt
 - **Real Estate Professionals**: Identify locations for advertising and marketing
 - **Home Buyers/Sellers**: Understand market competitiveness by area and price range 
 - **Market Analysts**: Research regional housing market dynamics
+
+## Author
+- **Author**: Andrew Smith  
