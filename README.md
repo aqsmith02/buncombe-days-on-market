@@ -71,4 +71,4 @@ Visit the live dashboard at: **[aqsmith02.github.io/buncombe-days-on-market](htt
 - **Market Analysts**: Research regional housing market dynamics
 
 ## Author
-- **Author**: Andrew Smith  
+- Andrew Smith  
