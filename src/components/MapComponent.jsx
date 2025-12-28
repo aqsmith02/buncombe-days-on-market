@@ -32,12 +32,35 @@ export default function MapComponent({ properties, allDoms }) {
 
                 if (lat && lon && dom !== undefined) {
                     const color = getQuartileColor(dom, allDoms);
+
+                    // Create 3 circles with different sizes and opacities
+                    // Largest circle - very opaque
+                    L.circleMarker([lat, lon], {
+                        radius: 14,
+                        fillColor: color,
+                        color: color,
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 0.12,
+                    }).addTo(mapInstance.current);
+
+                    // Medium circle - somewhat opaque
+                    L.circleMarker([lat, lon], {
+                        radius: 9,
+                        fillColor: color,
+                        color: color,
+                        weight: 0,
+                        opacity: 0,
+                        fillOpacity: 0.22,
+                    }).addTo(mapInstance.current);
+
+                    // Small circle - not opaque
                     const marker = L.circleMarker([lat, lon], {
-                        radius: 5,
+                        radius: 3,
                         fillColor: color,
                         color: color,
                         weight: 1,
-                        opacity: 0.8,
+                        opacity: 0.65,
                         fillOpacity: 0.7,
                     })
                         .bindPopup(

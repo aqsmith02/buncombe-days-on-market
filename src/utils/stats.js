@@ -66,7 +66,7 @@ export function getQuartileColor(dom, doms) {
     const q2 = percentile(doms, 50);
     const q3 = percentile(doms, 75);
 
-    if (dom <= q1) return '#2ecc71'; // green - fast
+    if (dom <= q1) return '#27ae60'; // green - fast
     if (dom <= q2) return '#f1c40f'; // yellow
     if (dom <= q3) return '#e67e22'; // orange
     return '#e74c3c'; // red - slow
@@ -88,7 +88,7 @@ export function getDOMBins() {
 export function getDOMDistribution(doms) {
     if (doms.length === 0) {
         return [
-            { name: 'Q1', value: 0, color: '#2ecc71' },
+            { name: 'Q1', value: 0, color: '#27ae60' },
             { name: 'Q2', value: 0, color: '#f1c40f' },
             { name: 'Q3', value: 0, color: '#e67e22' },
             { name: 'Q4', value: 0, color: '#e74c3c' },
@@ -105,7 +105,7 @@ export function getDOMDistribution(doms) {
 export function getDOMDistributionWithQuartiles(doms, q1, q2, q3) {
     if (doms.length === 0) {
         return [
-            { name: `Q1 (≤${q1.toFixed(0)}d)`, value: 0, color: '#2ecc71' },
+            { name: `Q1 (≤${q1.toFixed(0)}d)`, value: 0, color: '#27ae60' },
             { name: `Q2 (≤${q2.toFixed(0)}d)`, value: 0, color: '#f1c40f' },
             { name: `Q3 (≤${q3.toFixed(0)}d)`, value: 0, color: '#e67e22' },
             { name: `Q4 (>${q3.toFixed(0)}d)`, value: 0, color: '#e74c3c' },
@@ -122,7 +122,7 @@ export function getDOMDistributionWithQuartiles(doms, q1, q2, q3) {
     });
 
     return [
-        { name: `Q1 (≤${q1.toFixed(0)}d)`, value: counts[0], color: '#2ecc71' },
+        { name: `Q1 (≤${q1.toFixed(0)}d)`, value: counts[0], color: '#27ae60' },
         { name: `Q2 (≤${q2.toFixed(0)}d)`, value: counts[1], color: '#f1c40f' },
         { name: `Q3 (≤${q3.toFixed(0)}d)`, value: counts[2], color: '#e67e22' },
         { name: `Q4 (>${q3.toFixed(0)}d)`, value: counts[3], color: '#e74c3c' },
