@@ -8,7 +8,7 @@ export default function DOMHistogram({ data }) {
 
     return (
         <div className="chart-container">
-            <h3>DOM Histogram (10-day bins)</h3>
+            <h3 style={{ textAlign: 'center' }}>DOM Histogram (10-day bins)</h3>
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />

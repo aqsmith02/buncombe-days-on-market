@@ -139,7 +139,7 @@ export default function App() {
 
                             {/* Map */}
                             <div style={{ marginTop: '30px', marginBottom: '30px' }}>
-                                <h2>Property Map</h2>
+                                <h2 style={{ textAlign: 'center' }}>Property Map</h2>
                                 <MapComponent properties={allData} allDoms={allDomsForQuartiles} />
                             </div>
 

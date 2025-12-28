@@ -3,7 +3,7 @@ import React from 'react';
 export default function StatisticsPanel({ stats }) {
     return (
         <div className="stats-panel">
-            <h3>DOM Summary Statistics</h3>
+            <h3 style={{ textAlign: 'center' }}>DOM Summary Statistics</h3>
             <table style={{ width: '100%', fontSize: '13px', borderCollapse: 'collapse' }}>
                 <tbody>
                     <tr>

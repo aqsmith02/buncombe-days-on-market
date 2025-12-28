@@ -8,7 +8,7 @@ export default function DOMPieChart({ data }) {
 
     return (
         <div className="chart-container">
-            <h3>DOM Quartile Distribution</h3>
+            <h3 style={{ textAlign: 'center' }}>DOM Quartile Distribution</h3>
             <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                     <Pie
