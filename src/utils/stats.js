@@ -88,10 +88,10 @@ export function getDOMBins() {
 export function getDOMDistribution(doms) {
     if (doms.length === 0) {
         return [
-            { name: 'Q1 (0-25%)', value: 0, color: '#2ecc71' },
-            { name: 'Q2 (25-50%)', value: 0, color: '#f1c40f' },
-            { name: 'Q3 (50-75%)', value: 0, color: '#e67e22' },
-            { name: 'Q4 (75-100%)', value: 0, color: '#e74c3c' },
+            { name: 'Q1', value: 0, color: '#2ecc71' },
+            { name: 'Q2', value: 0, color: '#f1c40f' },
+            { name: 'Q3', value: 0, color: '#e67e22' },
+            { name: 'Q4', value: 0, color: '#e74c3c' },
         ];
     }
 
@@ -105,10 +105,10 @@ export function getDOMDistribution(doms) {
 export function getDOMDistributionWithQuartiles(doms, q1, q2, q3) {
     if (doms.length === 0) {
         return [
-            { name: `Q1 (0-25%, ≤${q1.toFixed(0)}d)`, value: 0, color: '#2ecc71' },
-            { name: `Q2 (25-50%, ≤${q2.toFixed(0)}d)`, value: 0, color: '#f1c40f' },
-            { name: `Q3 (50-75%, ≤${q3.toFixed(0)}d)`, value: 0, color: '#e67e22' },
-            { name: `Q4 (75-100%, >${q3.toFixed(0)}d)`, value: 0, color: '#e74c3c' },
+            { name: `Q1 (≤${q1.toFixed(0)}d)`, value: 0, color: '#2ecc71' },
+            { name: `Q2 (≤${q2.toFixed(0)}d)`, value: 0, color: '#f1c40f' },
+            { name: `Q3 (≤${q3.toFixed(0)}d)`, value: 0, color: '#e67e22' },
+            { name: `Q4 (>${q3.toFixed(0)}d)`, value: 0, color: '#e74c3c' },
         ];
     }
 
@@ -122,10 +122,10 @@ export function getDOMDistributionWithQuartiles(doms, q1, q2, q3) {
     });
 
     return [
-        { name: `Q1 (0-25%, ≤${q1.toFixed(0)}d)`, value: counts[0], color: '#2ecc71' },
-        { name: `Q2 (25-50%, ≤${q2.toFixed(0)}d)`, value: counts[1], color: '#f1c40f' },
-        { name: `Q3 (50-75%, ≤${q3.toFixed(0)}d)`, value: counts[2], color: '#e67e22' },
-        { name: `Q4 (75-100%, >${q3.toFixed(0)}d)`, value: counts[3], color: '#e74c3c' },
+        { name: `Q1 (≤${q1.toFixed(0)}d)`, value: counts[0], color: '#2ecc71' },
+        { name: `Q2 (≤${q2.toFixed(0)}d)`, value: counts[1], color: '#f1c40f' },
+        { name: `Q3 (≤${q3.toFixed(0)}d)`, value: counts[2], color: '#e67e22' },
+        { name: `Q4 (>${q3.toFixed(0)}d)`, value: counts[3], color: '#e74c3c' },
     ];
 }
 
