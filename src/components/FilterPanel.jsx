@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, onSeasonChange, onRadiusFilter, radiusAddress, radiusValue, isLoadingGeocoding }) {
     const [address, setAddress] = useState(radiusAddress || '');
-    const [radius, setRadius] = useState(radiusValue || 5);
+    const [radius, setRadius] = useState('');
 
     const priceRangeOptions = [
         { id: '500k', label: '$500K–$1M' },
@@ -32,14 +32,14 @@ export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, 
     };
 
     const handleApplyRadius = () => {
-        if (address.trim()) {
-            onRadiusFilter(address, radius);
+        if (address.trim() && radius) {
+            onRadiusFilter(address, parseFloat(radius));
         }
     };
 
     const handleClearRadius = () => {
         setAddress('');
-        setRadius(5);
+        setRadius('');
         onRadiusFilter(null, null);
     };
 
@@ -97,8 +97,8 @@ export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, 
                         value={radius}
                         onChange={(e) => {
                             const val = e.target.value;
-                            if (val === '' || !isNaN(val)) {
-                                setRadius(val === '' ? '' : parseFloat(val));
+                            if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                                setRadius(val);
                             }
                         }}
                         style={{ flex: 1, padding: '6px', fontSize: '13px' }}
