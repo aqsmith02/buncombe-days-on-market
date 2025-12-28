@@ -35,40 +35,36 @@ The repository contains JSON data files organized by price segments and time per
 Each price segment includes seasonal breakdowns:
 - `*_jan_mar.json`: Winter
 - `*_april_june.json`: Spring
-- `*_july_sep.json`: Summer
-- `*_oct_dec.json`: Fall
-- `*_unsold.json`: Currently unsold properties (collection was taken at the end of spring)
+# Buncombe Days on Market — React rework
 
-## Getting Started
+This workspace was scaffolded into a small React app (Vite) to modernize structure and make future feature work easier.
 
-### Option 1: View Online (Quickest)
-Visit the live dashboard at: **[aqsmith02.github.io/buncombe-days-on-market](https://aqsmith02.github.io/buncombe-days-on-market/)**
+What's included
+- Vite + React scaffold (`package.json`, `vite.config.js`)
+- `src/` with `App.jsx`, `main.jsx`, components and styles
+- A simple data loader that fetches the JSON datasets listed in `src/data/files.js`
 
-### Option 2: Run Locally
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/buncombe-days-on-market.git
-   cd buncombe-days-on-market
-   ```
+Quick start (developer)
+1. Install dependencies
 
-2. **Open the dashboard**
-   Open `index.html` in your web browser to launch the interactive dashboard.
+```bash
+npm install
+```
 
-3. **Explore the data**
-   - Use the map to identify market trends geographically
-   - Toggle between price segments to compare market velocities
-   - Click on individual properties for detailed information
+2. Run dev server
 
-## Data Notes
+```bash
+npm run dev
+```
 
-- Data includes both sold and currently listed properties (currently listed properties have been on the market for over 90 days minimum)
-- Geographic coverage focuses on Buncombe County, NC
+3. Open http://localhost:5173 (Vite dev server) and pick a dataset from the sidebar.
 
-## Use Cases
+Notes about datasets
+- The app fetches JSON paths listed in `src/data/files.js` (paths currently point to the repository root, e.g. `/0_to_500k.json`). If fetches return 404, move the JSON files into a `public/` folder (e.g. `public/0_to_500k.json`) so Vite serves them as static assets.
 
-- **Real Estate Professionals**: Identify locations for advertising and marketing
-- **Home Buyers/Sellers**: Understand market competitiveness by area and price range 
-- **Market Analysts**: Research regional housing market dynamics
+Next steps I can do for you
+- Move existing JSON files into `public/data/` and update `src/data/files.js`
+- Add routing, charts (Chart.js / Recharts), and a map component (Leaflet/Mapbox)
+- Add testing, ESLint/Prettier, CI config, and a production build pipeline
 
-## Author
-- Andrew Smith  
+If you want, I can now move the dataset files into `public/` and wire them up. Say the word.
