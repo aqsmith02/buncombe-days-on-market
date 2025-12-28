@@ -86,24 +86,47 @@ export function getDOMBins() {
 }
 
 export function getDOMDistribution(doms) {
-    const bins = getDOMBins();
+    if (doms.length === 0) {
+        return [
+            { name: 'Q1 (0-25%)', value: 0, color: '#2ecc71' },
+            { name: 'Q2 (25-50%)', value: 0, color: '#f1c40f' },
+            { name: 'Q3 (50-75%)', value: 0, color: '#e67e22' },
+            { name: 'Q4 (75-100%)', value: 0, color: '#e74c3c' },
+        ];
+    }
+
+    const q1 = percentile(doms, 25);
+    const q2 = percentile(doms, 50);
+    const q3 = percentile(doms, 75);
+
+    return getDOMDistributionWithQuartiles(doms, q1, q2, q3);
+}
+
+export function getDOMDistributionWithQuartiles(doms, q1, q2, q3) {
+    if (doms.length === 0) {
+        return [
+            { name: `Q1 (0-25%, ≤${q1.toFixed(0)}d)`, value: 0, color: '#2ecc71' },
+            { name: `Q2 (25-50%, ≤${q2.toFixed(0)}d)`, value: 0, color: '#f1c40f' },
+            { name: `Q3 (50-75%, ≤${q3.toFixed(0)}d)`, value: 0, color: '#e67e22' },
+            { name: `Q4 (75-100%, >${q3.toFixed(0)}d)`, value: 0, color: '#e74c3c' },
+        ];
+    }
+
     const counts = [0, 0, 0, 0];
 
     doms.forEach((dom) => {
-        for (let i = 0; i < bins.ranges.length; i++) {
-            const [min, max] = bins.ranges[i];
-            if (dom >= min && dom <= max) {
-                counts[i]++;
-                break;
-            }
-        }
+        if (dom <= q1) counts[0]++;
+        else if (dom <= q2) counts[1]++;
+        else if (dom <= q3) counts[2]++;
+        else counts[3]++;
     });
 
-    return counts.map((count, i) => ({
-        name: bins.labels[i],
-        value: count,
-        color: bins.colors[i],
-    }));
+    return [
+        { name: `Q1 (0-25%, ≤${q1.toFixed(0)}d)`, value: counts[0], color: '#2ecc71' },
+        { name: `Q2 (25-50%, ≤${q2.toFixed(0)}d)`, value: counts[1], color: '#f1c40f' },
+        { name: `Q3 (50-75%, ≤${q3.toFixed(0)}d)`, value: counts[2], color: '#e67e22' },
+        { name: `Q4 (75-100%, >${q3.toFixed(0)}d)`, value: counts[3], color: '#e74c3c' },
+    ];
 }
 
 export function getHistogramData(doms) {
