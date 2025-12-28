@@ -5,13 +5,17 @@ import DOMPieChart from './components/DOMPieChart'
 import DOMHistogram from './components/DOMHistogram'
 import MapComponent from './components/MapComponent'
 import { calculateStats, getDOMDistributionWithQuartiles, percentile, getHistogramData } from './utils/stats'
+import { geocodeAddress, filterByRadius } from './utils/geocoding'
 
 export default function App() {
     const [priceRanges, setPriceRanges] = useState(['500k', '1m+'])
     const [seasons, setSeasons] = useState(['jan_mar', 'april_june', 'july_sep', 'oct_dec', 'unsold'])
     const [allData, setAllData] = useState([])
     const [allDataForQuartiles, setAllDataForQuartiles] = useState([])
+    const [radiusAddress, setRadiusAddress] = useState(null)
+    const [radiusCenter, setRadiusCenter] = useState(null)
     const [radiusValue, setRadiusValue] = useState(5)
+    const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false)
     const [loading, setLoading] = useState(false)
 
     // Build dataset lists
@@ -89,8 +93,37 @@ export default function App() {
             })
     }, [datasetsForQuartiles])
 
+    // Handle radius filter
+    const handleRadiusFilter = async (address, radius) => {
+        if (!address) {
+            setRadiusAddress(null)
+            setRadiusCenter(null)
+            setRadiusValue(5)
+            return
+        }
+
+        setIsLoadingGeocoding(true)
+        try {
+            const geocoded = await geocodeAddress(address)
+            setRadiusAddress(address)
+            setRadiusCenter({ lat: geocoded.lat, lon: geocoded.lon })
+            setRadiusValue(radius)
+        } catch (error) {
+            alert('Could not find address. Please try another.')
+            console.error(error)
+        } finally {
+            setIsLoadingGeocoding(false)
+        }
+    }
+
+    // Apply radius filter to data
+    const filteredData = useMemo(() => {
+        if (!radiusCenter) return allData
+        return filterByRadius(allData, radiusCenter.lat, radiusCenter.lon, radiusValue)
+    }, [allData, radiusCenter, radiusValue])
+
     // Calculate derived data - use allDataForQuartiles for quartile calculation
-    const allDoms = useMemo(() => allData.map((p) => p['days on market']).filter((d) => d !== undefined), [allData])
+    const allDoms = useMemo(() => filteredData.map((p) => p['days on market']).filter((d) => d !== undefined), [filteredData])
     const allDomsForQuartiles = useMemo(() => allDataForQuartiles.map((p) => p['days on market']).filter((d) => d !== undefined), [allDataForQuartiles])
     const stats = useMemo(() => calculateStats(allDoms), [allDoms])
     const pieData = useMemo(() => {
@@ -122,6 +155,10 @@ export default function App() {
                         seasons={seasons}
                         onPriceRangeChange={setPriceRanges}
                         onSeasonChange={setSeasons}
+                        onRadiusFilter={handleRadiusFilter}
+                        radiusAddress={radiusAddress}
+                        radiusValue={radiusValue}
+                        isLoadingGeocoding={isLoadingGeocoding}
                     />
                 </aside>
 
@@ -140,14 +177,14 @@ export default function App() {
                             {/* Map */}
                             <div style={{ marginTop: '30px', marginBottom: '30px' }}>
                                 <h2 style={{ textAlign: 'center' }}>Property Map</h2>
-                                <MapComponent properties={allData} allDoms={allDomsForQuartiles} />
+                                <MapComponent properties={filteredData} allDoms={allDomsForQuartiles} radiusCenter={radiusCenter} radiusValue={radiusValue} />
                             </div>
 
                             {/* Download Button */}
                             <div style={{ marginTop: '30px', textAlign: 'center' }}>
                                 <button
                                     onClick={() => {
-                                        const dataStr = JSON.stringify(allData, null, 2);
+                                        const dataStr = JSON.stringify(filteredData, null, 2);
                                         const dataBlob = new Blob([dataStr], { type: 'application/json' });
                                         const url = URL.createObjectURL(dataBlob);
                                         const link = document.createElement('a');

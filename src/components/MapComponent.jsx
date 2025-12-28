@@ -3,10 +3,11 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getQuartileColor } from '../utils/stats';
 
-export default function MapComponent({ properties, allDoms }) {
+export default function MapComponent({ properties, allDoms, radiusCenter, radiusValue }) {
     const mapRef = useRef(null);
     const mapInstance = useRef(null);
     const markersRef = useRef([]);
+    const radiusCircleRef = useRef(null);
 
     useEffect(() => {
         if (!mapRef.current) return;
@@ -22,6 +23,25 @@ export default function MapComponent({ properties, allDoms }) {
         // Clear old markers
         markersRef.current.forEach((marker) => marker.remove());
         markersRef.current = [];
+
+        // Clear old radius circle
+        if (radiusCircleRef.current) {
+            radiusCircleRef.current.remove();
+            radiusCircleRef.current = null;
+        }
+
+        // Draw radius circle if active
+        if (radiusCenter && radiusValue) {
+            radiusCircleRef.current = L.circle([radiusCenter.lat, radiusCenter.lon], {
+                radius: radiusValue * 1609.34, // Convert miles to meters
+                color: '#3498db',
+                fillColor: '#3498db',
+                fillOpacity: 0.1,
+                weight: 2,
+                opacity: 0.6,
+                dashArray: '5, 5',
+            }).addTo(mapInstance.current);
+        }
 
         // Add new markers
         if (properties && properties.length > 0) {
@@ -77,7 +97,7 @@ export default function MapComponent({ properties, allDoms }) {
                 }
             });
         }
-    }, [properties, allDoms]);
+    }, [properties, allDoms, radiusCenter, radiusValue]);
 
     return (
         <div style={{ width: '100%', height: '600px', borderRadius: '8px', overflow: 'hidden' }}>
