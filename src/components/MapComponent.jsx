@@ -34,11 +34,11 @@ export default function MapComponent({ properties, allDoms, radiusCenter, radius
         if (radiusCenter && radiusValue) {
             radiusCircleRef.current = L.circle([radiusCenter.lat, radiusCenter.lon], {
                 radius: radiusValue * 1609.34, // Convert miles to meters
-                color: '#3498db',
-                fillColor: '#3498db',
-                fillOpacity: 0.1,
-                weight: 2,
-                opacity: 0.6,
+                color: '#2874a6',
+                fillColor: '#2874a6',
+                fillOpacity: 0.15,
+                weight: 4,
+                opacity: 1,
                 dashArray: '5, 5',
             }).addTo(mapInstance.current);
         }

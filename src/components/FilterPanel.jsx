@@ -90,29 +90,33 @@ export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, 
                     onChange={(e) => setAddress(e.target.value)}
                     style={{ width: '100%', padding: '6px', marginBottom: '8px', fontSize: '13px', boxSizing: 'border-box' }}
                 />
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
                     <input
-                        type="number"
-                        placeholder="Radius (miles)"
+                        type="text"
+                        placeholder="Radius"
                         value={radius}
-                        onChange={(e) => setRadius(parseFloat(e.target.value) || 5)}
-                        step="0.1"
-                        min="0.1"
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            if (val === '' || !isNaN(val)) {
+                                setRadius(val === '' ? '' : parseFloat(val));
+                            }
+                        }}
                         style={{ flex: 1, padding: '6px', fontSize: '13px' }}
                     />
+                    <span style={{ fontSize: '13px', minWidth: '40px' }}>miles</span>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <button
                         onClick={handleApplyRadius}
-                        disabled={isLoadingGeocoding}
+                        disabled={isLoadingGeocoding || !radius}
                         style={{
                             flex: 1,
                             padding: '6px',
-                            backgroundColor: isLoadingGeocoding ? '#ccc' : '#27ae60',
+                            backgroundColor: (isLoadingGeocoding || !radius) ? '#ccc' : '#27ae60',
                             color: 'white',
                             border: 'none',
                             borderRadius: '4px',
-                            cursor: isLoadingGeocoding ? 'not-allowed' : 'pointer',
+                            cursor: (isLoadingGeocoding || !radius) ? 'not-allowed' : 'pointer',
                             fontSize: '13px',
                         }}
                     >
