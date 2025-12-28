@@ -143,37 +143,33 @@ export default function App() {
                                 <MapComponent properties={allData} allDoms={allDomsForQuartiles} />
                             </div>
 
-                            {/* Data Table */}
-                            <div style={{ marginTop: '30px', fontSize: '12px', overflowX: 'auto' }}>
-                                <h2>Property Data</h2>
-                                {allData.length > 0 ? (
-                                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                                        <thead>
-                                            <tr style={{ backgroundColor: '#f5f5f5' }}>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>Address</th>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>Price</th>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>DOM</th>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>Beds</th>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>Baths</th>
-                                                <th style={{ padding: '8px', textAlign: 'left', borderBottom: '1px solid #ddd' }}>SQFT</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {allData.slice(0, 50).map((prop, i) => (
-                                                <tr key={i} style={{ borderBottom: '1px solid #eee' }}>
-                                                    <td style={{ padding: '8px' }}>{prop.address}</td>
-                                                    <td style={{ padding: '8px' }}>${prop.price?.toLocaleString()}</td>
-                                                    <td style={{ padding: '8px' }}>{prop['days on market']}</td>
-                                                    <td style={{ padding: '8px' }}>{prop.beds}</td>
-                                                    <td style={{ padding: '8px' }}>{prop.baths}</td>
-                                                    <td style={{ padding: '8px' }}>{prop.sqft?.toLocaleString()}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    <div style={{ padding: '20px', color: '#999' }}>No data selected</div>
-                                )}
+                            {/* Download Button */}
+                            <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                                <button
+                                    onClick={() => {
+                                        const dataStr = JSON.stringify(allData, null, 2);
+                                        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                                        const url = URL.createObjectURL(dataBlob);
+                                        const link = document.createElement('a');
+                                        link.href = url;
+                                        link.download = `buncombe-data-${new Date().toISOString().split('T')[0]}.json`;
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                        URL.revokeObjectURL(url);
+                                    }}
+                                    style={{
+                                        padding: '10px 20px',
+                                        backgroundColor: '#3498db',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        fontSize: '14px',
+                                    }}
+                                >
+                                    Download Filtered Data
+                                </button>
                             </div>
                         </div>
                     )}
