@@ -1,6 +1,6 @@
 # Buncombe County Days on Market (DOM)
 
-An interactive data visualization project exploring **Days on Market (DOM)** for residential real estate listings in **Buncombe County, NC**.
+An interactive data visualization project built for Letterle Enterprises. This project explores **Days on Market (DOM)** for residential real estate listings in **Buncombe County, NC**.
 
 The application allows users to explore how long homes take to sell across price ranges, seasons, and geographic areas, while clearly distinguishing between sold and unsold listings.
 
