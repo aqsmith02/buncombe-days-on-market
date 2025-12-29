@@ -122,9 +122,23 @@ export default function App() {
         return filterByRadius(allData, radiusCenter.lat, radiusCenter.lon, radiusValue)
     }, [allData, radiusCenter, radiusValue])
 
-    // Calculate derived data - use allDataForQuartiles for quartile calculation
-    const allDoms = useMemo(() => filteredData.map((p) => p['days on market']).filter((d) => d !== undefined), [filteredData])
-    const allDomsForQuartiles = useMemo(() => allDataForQuartiles.map((p) => p['days on market']).filter((d) => d !== undefined), [allDataForQuartiles])
+    // Calculate derived data - EXCLUDE unsold from DOM calculations
+    const allDoms = useMemo(() => 
+        filteredData
+            .filter((p) => p.status === 'sold')  // Only sold homes for statistics
+            .map((p) => p['days on market'])
+            .filter((d) => d !== undefined), 
+        [filteredData]
+    )
+    
+    const allDomsForQuartiles = useMemo(() => 
+        allDataForQuartiles
+            .filter((p) => p.status === 'sold')  // Only sold homes for quartile calculation
+            .map((p) => p['days on market'])
+            .filter((d) => d !== undefined), 
+        [allDataForQuartiles]
+    )
+
     const stats = useMemo(() => calculateStats(allDoms), [allDoms])
     const pieData = useMemo(() => {
         if (allDomsForQuartiles.length === 0) {
@@ -142,10 +156,16 @@ export default function App() {
     }, [allDoms, allDomsForQuartiles])
     const histData = useMemo(() => getHistogramData(allDoms), [allDoms])
 
+    // Count unsold properties for display
+    const unsoldCount = useMemo(() => 
+        filteredData.filter((p) => p.status !== 'sold').length,
+        [filteredData]
+    )
+
     return (
         <div className="app">
             <header className="app-header">
-                <h1>Buncombe County Housing — Days on Market</h1>
+                <h1>Buncombe County Housing – Days on Market</h1>
             </header>
 
             <main className="app-main">
@@ -167,17 +187,67 @@ export default function App() {
 
                     {!loading && (
                         <div>
+                            {/* Info banner about unsold homes */}
+                            {unsoldCount > 0 && (
+                                <div style={{
+                                    backgroundColor: '#e8f4f8',
+                                    border: '1px solid #b8dce8',
+                                    borderRadius: '8px',
+                                    padding: '12px 16px',
+                                    marginBottom: '20px',
+                                    fontSize: '14px',
+                                    color: '#2c5f6f'
+                                }}>
+                                    <strong>Note:</strong> {unsoldCount} unsold {unsoldCount === 1 ? 'property' : 'properties'} shown in gray on map. 
+                                    Statistics and quartiles calculated from sold homes only.
+                                </div>
+                            )}
+
                             {/* Charts Row */}
                             <div className="charts-row">
                                 <DOMPieChart data={pieData} />
                                 <DOMHistogram data={histData} />
-                                <StatisticsPanel stats={stats} />
+                                <StatisticsPanel stats={stats} soldCount={allDoms.length} unsoldCount={unsoldCount} />
                             </div>
 
                             {/* Map */}
                             <div style={{ marginTop: '30px', marginBottom: '30px' }}>
                                 <h2 style={{ textAlign: 'center' }}>Property Map</h2>
-                                <MapComponent properties={filteredData} allDoms={allDomsForQuartiles} radiusCenter={radiusCenter} radiusValue={radiusValue} />
+                                <div style={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'center', 
+                                    gap: '20px', 
+                                    marginBottom: '15px',
+                                    fontSize: '13px',
+                                    color: '#666'
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#27ae60' }}></div>
+                                        <span>Fast (Q1)</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#f1c40f' }}></div>
+                                        <span>Moderate (Q2)</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#e67e22' }}></div>
+                                        <span>Slow (Q3)</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#e74c3c' }}></div>
+                                        <span>Very Slow (Q4)</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#95a5a6' }}></div>
+                                        <span>Unsold</span>
+                                    </div>
+                                </div>
+                                <MapComponent 
+                                    properties={filteredData} 
+                                    allDoms={allDomsForQuartiles} 
+                                    radiusCenter={radiusCenter} 
+                                    radiusValue={radiusValue} 
+                                />
                             </div>
 
                             {/* Download Button */}
