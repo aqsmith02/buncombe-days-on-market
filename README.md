@@ -1,23 +1,64 @@
-# Buncombe County Days on Market Analysis
+# Buncombe County Days on Market (DOM)
 
-An interactive dashboard analyzing real estate market dynamics in Buncombe County, North Carolina, focusing on days on market (DOM) patterns across different price segments.
+An interactive data visualization project exploring **Days on Market (DOM)** for residential real estate listings in **Buncombe County, NC**.
 
-## Overview
+The application allows users to explore how long homes take to sell across price ranges, seasons, and geographic areas, while clearly distinguishing between sold and unsold listings.
 
-This project provides a comprehensive visualization of housing market demand in Buncombe County, helping users understand which areas and price ranges experience faster or slower sales. The dashboard features a color-coded map where green indicates fast-selling properties and red indicates slower-selling properties.
+Live site: [https://aqsmith02.github.io/buncombe-days-on-market/](https://aqsmith02.github.io/buncombe-days-on-market/)
+
+---
 
 ## Features
 
-### Interactive Map
-- **Color-coded visualization**: Green markers for fast-selling homes, red for slow-moving properties
-- **Clickable property markers**: Each home displays detailed information and links to original listings
-- **Zooming ability**: Can zoom in or out throughout the map
+* Interactive map of residential properties using Leaflet
+* Properties colored by DOM quartile
+* Unsold properties displayed in gray
+* Radius-based geographic filtering
+* Summary statistics for sold properties
+* Quartile distribution pie chart
+* Histogram of days on market
+* Downloadable filtered dataset
 
-### Data Filtering & Analysis
-- **Price/season segment toggles**: Filter between different price ranges and seasons
-- **Address radii filter**: Create radii filters around addresses
-- **Real-time filtering**: Instantly update visualizations based on selected criteria
+---
 
-### Analytics Dashboard
-- **Summary statistics**: Key market metrics and trends
-- **Interactive graphs**: Visual representation of market data
+## Tech Stack
+
+* React 18
+* Vite
+* Leaflet
+* Recharts
+* GitHub Pages
+
+---
+
+## Running the Project
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Deploy to GitHub Pages:
+
+```bash
+npm run deploy
+```
+
+---
+
+## Author
+
+Andrew Smith
