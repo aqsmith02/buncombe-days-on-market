@@ -14,7 +14,7 @@ export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, 
         { id: 'april_june', label: 'Apr–Jun' },
         { id: 'july_sep', label: 'Jul–Sep' },
         { id: 'oct_dec', label: 'Oct–Dec' },
-        { id: 'unsold', label: 'Unsold' },
+        { id: 'unsold', label: 'Unsold (90+ Days On The Market)' },
     ];
 
     const handlePriceRangeChange = (id) => {
