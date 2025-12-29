@@ -2,7 +2,7 @@
 
 An interactive data visualization project built for Letterle Enterprises. This project explores **Days on Market (DOM)** for residential real estate listings in **Buncombe County, NC**.
 
-The application allows users to explore how long homes take to sell across price ranges, seasons, and geographic areas, while clearly distinguishing between sold and unsold listings.
+The application allows users to explore how long homes take to sell across price ranges, seasons, and geographic areas.
 
 Live site: [https://aqsmith02.github.io/buncombe-days-on-market/](https://aqsmith02.github.io/buncombe-days-on-market/)
 
@@ -12,7 +12,7 @@ Live site: [https://aqsmith02.github.io/buncombe-days-on-market/](https://aqsmit
 
 * Interactive map of residential properties using Leaflet
 * Properties colored by DOM quartile
-* Unsold properties displayed in gray
+* Unsold properties (90+ days on the market) displayed in gray
 * Radius-based geographic filtering
 * Summary statistics for sold properties
 * Quartile distribution pie chart
