@@ -100,10 +100,14 @@ export default function MapComponent({ properties, allDoms, radiusCenter, radius
                 const lat = prop.lat;
                 const lon = prop.lon;
                 const dom = prop['days on market'];
+                const isSold = prop.status === 'sold';
 
                 if (lat && lon && dom !== undefined) {
                     try {
-                        const color = getQuartileColor(dom, allDoms);
+                        // Different color for sold vs unsold
+                        const color = isSold 
+                            ? getQuartileColor(dom, allDoms)  // Quartile color for sold
+                            : '#95a5a6';  // Gray for unsold
 
                         // Create 3 circles with different sizes and opacities for glow effect
                         // Largest circle - very transparent (outer glow)
@@ -141,7 +145,7 @@ export default function MapComponent({ properties, allDoms, radiusCenter, radius
                                 `<div style="font-size: 12px;">
                     <strong>${prop.address}</strong><br/>
                     Price: $${prop.price?.toLocaleString()}<br/>
-                    DOM: ${dom} days<br/>
+                    ${isSold ? `DOM: ${dom} days` : `Days Listed: ${dom} (Unsold)`}<br/>
                     <a href="${prop.url}" target="_blank" rel="noopener noreferrer">View Listing</a>
                   </div>`
                             )
