@@ -66,7 +66,7 @@ export default function App() {
         setLoading(true)
         Promise.all(
             selectedDatasets.map((ds) =>
-                fetch(`/data/${ds}`)
+                fetch(`${import.meta.env.BASE_URL}data/${ds}`)
                     .then((r) => r.json())
                     .catch(() => [])
             )
@@ -82,7 +82,7 @@ export default function App() {
     useEffect(() => {
         Promise.all(
             datasetsForQuartiles.map((ds) =>
-                fetch(`/data/${ds}`)
+                fetch(`${import.meta.env.BASE_URL}data/${ds}`)
                     .then((r) => r.json())
                     .catch(() => [])
             )
