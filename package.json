@@ -2,6 +2,7 @@
     "name": "buncombe-days-on-market",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://aqsmith02.github.io/buncombe-days-on-market",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
