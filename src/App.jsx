@@ -14,7 +14,7 @@ export default function App() {
     const [allDataForQuartiles, setAllDataForQuartiles] = useState([])
     const [radiusAddress, setRadiusAddress] = useState(null)
     const [radiusCenter, setRadiusCenter] = useState(null)
-    const [radiusValue, setRadiusValue] = useState(5)
+    const [radiusValue, setRadiusValue] = useState(null)
     const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false)
     const [loading, setLoading] = useState(false)
 

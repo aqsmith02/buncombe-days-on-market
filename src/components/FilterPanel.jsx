@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function FilterPanel({ priceRanges, seasons, onPriceRangeChange, onSeasonChange, onRadiusFilter, radiusAddress, radiusValue, isLoadingGeocoding }) {
     const [address, setAddress] = useState(radiusAddress || '');
     const [radius, setRadius] = useState('');
+
+    useEffect(() => {
+        if (radiusValue) {
+            setRadius(radiusValue.toString());
+        }
+    }, [radiusValue]);
+
+    useEffect(() => {
+        if (radiusAddress) {
+            setAddress(radiusAddress);
+        }
+    }, [radiusAddress]);
 
     const priceRangeOptions = [
         { id: '500k', label: '$500K–$1M' },
