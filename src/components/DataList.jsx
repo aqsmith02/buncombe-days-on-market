@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function DataList({ data }) {
     if (data === null) return <div>Loading dataset…</div>
     if (data && data.error) return <div className="error">Error: {data.error}</div>

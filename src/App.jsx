@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import FilterPanel from './components/FilterPanel'
 import StatisticsPanel from './components/StatisticsPanel'
 import DOMPieChart from './components/DOMPieChart'

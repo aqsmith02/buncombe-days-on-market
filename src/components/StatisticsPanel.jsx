@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function StatisticsPanel({ stats, soldCount, unsoldCount }) {
     return (
         <div className="stats-panel">
