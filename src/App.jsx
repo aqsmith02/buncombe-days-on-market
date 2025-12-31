@@ -23,13 +23,7 @@ export default function App() {
         '500k': '500k_to_1m',
         '1m+': '1m_plus',
     }
-    const seasonMap = {
-        'jan_mar': 'jan_mar',
-        'april_june': 'april_june',
-        'july_sep': 'july_sep',
-        'oct_dec': 'oct_dec',
-        'unsold': 'unsold',
-    }
+
     const allSeasons = ['jan_mar', 'april_june', 'july_sep', 'oct_dec', 'unsold']
 
     // Datasets for display (filtered by price range and season)
@@ -37,7 +31,7 @@ export default function App() {
         const datasets = []
         priceRanges.forEach((price) => {
             seasons.forEach((season) => {
-                const filename = `${priceMap[price]}_${seasonMap[season]}.json`
+                const filename = `${priceMap[price]}_${season}.json`
                 datasets.push(filename)
             })
         })
@@ -49,7 +43,7 @@ export default function App() {
         const datasets = []
         priceRanges.forEach((price) => {
             allSeasons.forEach((season) => {
-                const filename = `${priceMap[price]}_${seasonMap[season]}.json`
+                const filename = `${priceMap[price]}_${season}.json`
                 datasets.push(filename)
             })
         })
